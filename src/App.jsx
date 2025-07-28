@@ -1,10 +1,11 @@
 import "./App.css";
+import Main from "./components/layout/Main";
 
 function App() {
   return (
-    <div className="container-custom   ">
-      <h1>hi</h1>
-    </div>
+    <>
+      <Main />
+    </>
   );
 }
 
