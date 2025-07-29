@@ -1,10 +1,13 @@
-import axios from "axios";
+/* eslint-disable no-useless-catch */
+import axios from 'axios';
 import { useEffect } from "react";
 import { api } from "../api";
-
 import { useAuth } from "./useAuth";
+
 const useAxios = () => {
     const { auth, setAuth } = useAuth();
+
+
 
     useEffect(() => {
         // Add a request interceptor
@@ -24,7 +27,8 @@ const useAxios = () => {
             (response) => response,
             async (error) => {
                 const originalRequest = error.config;
-
+                // console.log(error)
+                // console.log('useAxios', originalRequest)
                 // If the error status is 401 and there is no originalRequest._retry flag,
                 // it means the token has expired and we need to refresh it
                 if (error.response.status === 401 && !originalRequest._retry) {
@@ -33,7 +37,7 @@ const useAxios = () => {
                     try {
                         const refreshToken = auth?.refreshToken;
                         const response = await axios.post(
-                            `${import.meta.env.VITE_SERVER_BASE_URL}/auth/refresh-token`,
+                            `http://localhost:3000/auth/refresh-token`,
                             { refreshToken }
                         );
                         const { token } = response.data;
@@ -43,6 +47,7 @@ const useAxios = () => {
 
                         // Retry the original request with the new token
                         originalRequest.headers.Authorization = `Bearer ${token}`;
+
                         return axios(originalRequest);
                     } catch (error) {
                         throw error;
