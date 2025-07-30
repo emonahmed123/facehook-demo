@@ -37,10 +37,19 @@
   .icon-btn {
     @apply flex items-center justify-center  rounded-md bg-lighterDark  p-1.5  font-medium  text-white hover:bg-deepDark;
   }
+    .post-avater{
+    @apply max-w-10 max-h-10 rounded-full lg:max-h-[58px] lg:max-w-[58px]
+  }
+  .action-menu-item{
+    @apply flex w-full items-center gap-2 text-gray-100 transition-all
 
-      
 }
+.action-modal-container{
+    @apply rounded-md border border-[#3F3F3F] bg-mediumDark px-4 py-4 lg:px-7 lg:py-5 absolute right-full top-6 min-w-[200px] divide-y divide-[#3F3F3F] py-2 [&>button]:py-2
+  }
 
+ 
+}
 @layer base {
   body {
     @apply bg-deepDark font-inter text-gray-100;
@@ -82,5 +91,5 @@
 } */ 
 
 
-
+/* } */
 
