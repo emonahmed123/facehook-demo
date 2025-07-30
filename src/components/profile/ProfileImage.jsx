@@ -22,8 +22,9 @@ const ProfileImage = () => {
       const formData = new FormData();
       for (const file of fileUploaderRef.current.files) {
         formData.append("avatar", file);
+        console.log(file);
       }
-
+      console.log(formData);
       const response = await api.post(
         `http://localhost:3000/profile/${state?.user?.id}/avatar`,
         formData

@@ -23,8 +23,8 @@ const Bio = () => {
 
       if (response.status === 200) {
         dispatch({
-          type: actions.profile.USER_DATA_EDITED,
-          data: response.data,
+          type: actions?.profile?.USER_DATA_EDITED,
+          data: response?.data,
         });
       }
       setEditMode(false);
