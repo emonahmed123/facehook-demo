@@ -1,37 +1,63 @@
-import { useAvatar } from "../../hooks/useAvatar";
 import PostCommentList from "./PostCommentList";
 
+import { useState } from "react";
+import { useAuth } from "../../hooks/useAuth";
+import useAxios from "../../hooks/useAxios";
+
 const PostComments = ({ post }) => {
-    const { avatarURL } = useAvatar(post);
+  const { auth } = useAuth();
+  const [comments, setComments] = useState(post?.comments);
+  const [comment, setComment] = useState("");
+  const { api } = useAxios();
 
-    return (
-        <div>
-            <div className="flex-center mb-3 gap-2 lg:gap-4">
-                <img
-                    className="max-w-7 max-h-7 rounded-full lg:max-h-[34px] lg:max-w-[34px]"
-                    src={avatarURL}
-                    alt="avatar"
-                />
+  const addComment = async (event) => {
+    const keyCode = event.keyCode;
 
-                <div className="flex-1">
-                    <input
-                        type="text"
-                        className="h-8 w-full rounded-full bg-lighterDark px-4 text-xs focus:outline-none sm:h-[38px]"
-                        name="post"
-                        id="post"
-                        placeholder="What's on your mind?"
-                    />
-                </div>
-            </div>
-            <div className="mt-4">
-                <button className="text-gray-300 max-md:text-sm">
-                    All Comment ▾
-                </button>
-            </div>
+    if (keyCode === 13) {
+      try {
+        const response = await api.patch(
+          `http://localhost:3000/posts/${post.id}/comment`,
+          { comment }
+        );
 
-            <PostCommentList comments={post?.comments} />
+        if (response.status === 200) {
+          setComments([...response.data.comments]);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  };
+
+  return (
+    <div>
+      <div className="flex-center mb-3 gap-2 lg:gap-4">
+        <img
+          className="max-w-7 max-h-7 rounded-full lg:max-h-[34px] lg:max-w-[34px]"
+          src={`http://localhost:3000/${auth?.user?.avatar}`}
+          alt="avatar"
+        />
+
+        <div className="flex-1">
+          <input
+            type="text"
+            className="h-8 w-full rounded-full bg-lighterDark px-4 text-xs focus:outline-none sm:h-[38px]"
+            name="post"
+            id="post"
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+            onKeyDown={(e) => addComment(e)}
+            placeholder="What's on your mind?"
+          />
         </div>
-    );
+      </div>
+      <div className="mt-4">
+        <button className="text-gray-300 max-md:text-sm">All Comment ▾</button>
+      </div>
+
+      <PostCommentList comments={comments} />
+    </div>
+  );
 };
 
 export default PostComments;

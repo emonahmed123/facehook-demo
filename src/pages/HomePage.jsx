@@ -42,6 +42,7 @@ const HomePage = () => {
     return <div> Error in fatching posts {state?.error?.message}</div>;
   }
 
+  console.log("HomePage component rendered with posts:", state?.posts);
   return (
     <div className="container mx-auto px-4">
       <PostList posts={state?.posts} />
