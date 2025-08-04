@@ -37,7 +37,7 @@ const Bio = () => {
   };
 
   return (
-    <div className="mt-4 flex items-start gap-2 lg:mt-6">
+    <div className=" mt-4 flex items-start gap-2 lg:mt-6">
       <div className="flex-1">
         {!editMode ? (
           <p className="leading-[188%] text-gray-400 lg:text-lg">

@@ -39,14 +39,14 @@ const ProfilePage = () => {
     };
 
     fetchProfile();
-  }, [api, auth]);
+  }, [api, auth, dispatch]);
 
   if (state?.loading) {
     return <div> Fetching your Profile data...</div>;
   }
 
   return (
-    <div>
+    <div className="container mx-auto px-3 xl:px-none">
       <ProfileInfo />
       <MyPosts />
     </div>
