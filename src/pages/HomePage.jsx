@@ -1,13 +1,13 @@
-import { useEffect, useReducer } from "react";
+import { useEffect } from "react";
 import { actions } from "../actions";
 import PostList from "../components/posts/PostList";
 
-import { initialState, postReducer } from "../reducers/PostReducer";
-
+import NewPost from "../components/posts/NewPost";
 import useAxios from "../hooks/useAxios";
+import { usePost } from "../hooks/usePost";
 
 const HomePage = () => {
-  const [state, dispatch] = useReducer(postReducer, initialState);
+  const { state, dispatch } = usePost();
   const { api } = useAxios();
 
   useEffect(() => {
@@ -26,7 +26,7 @@ const HomePage = () => {
         console.error(error);
         dispatch({
           type: actions.post.DATA_FETCH_ERROR,
-          error: error.message,
+          error: response.error,
         });
       }
     };
@@ -45,6 +45,7 @@ const HomePage = () => {
   console.log("HomePage component rendered with posts:", state?.posts);
   return (
     <div className="container mx-auto px-4">
+      <NewPost />
       <PostList posts={state?.posts} />
     </div>
   );
